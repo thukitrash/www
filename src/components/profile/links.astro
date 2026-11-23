@@ -1,0 +1,58 @@
+---
+import { Icon } from "astro-icon/components";
+import { LINKS } from "@/data/links";
+import { t } from "@/i18n";
+
+interface Props {
+  id?: string;
+}
+
+const { id = "links-title" } = Astro.props;
+---
+
+<section class="m-0 w-[min(100%,420px)] desktop:w-full" aria-labelledby={id}>
+  <h2
+    id={id}
+    class="mb-2 text-center font-display text-[22px] tracking-[-0.06em]"
+    data-i18n="links.title"
+  >
+    {t("links.title")}
+  </h2>
+  <nav
+    class="flex flex-wrap justify-center gap-x-1 gap-y-0.5"
+    aria-label={t("links.navLabel")}
+    data-i18n-aria-label="links.navLabel"
+  >
+    {LINKS.map((link) => (
+      <a
+        class="grid size-11 place-items-center text-ink no-underline transition-[transform,color] duration-[160ms] hover:-translate-y-[3px] hover:scale-[1.06] hover:text-muted hover:outline-none focus-visible:-translate-y-[3px] focus-visible:scale-[1.06] focus-visible:text-muted focus-visible:outline-none active:-translate-y-px active:scale-[0.98]"
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t(link.labelKey)}
+        data-i18n-aria-label={link.labelKey}
+      >
+        <Icon
+          name={link.icon}
+          class="block size-[1.55rem] text-current"
+          aria-hidden="true"
+        />
+      </a>
+    ))}
+    <button
+      class="grid size-11 place-items-center text-ink no-underline transition-[transform,color] duration-[160ms] hover:-translate-y-[3px] hover:scale-[1.06] hover:text-muted hover:outline-none focus-visible:-translate-y-[3px] focus-visible:scale-[1.06] focus-visible:text-muted focus-visible:outline-none active:-translate-y-px active:scale-[0.98]"
+      type="button"
+      aria-label={t("links.email")}
+      data-i18n-aria-label="links.email"
+      title={t("links.emailTitle")}
+      data-i18n-title="links.emailTitle"
+      data-email
+    >
+      <Icon
+        name="andrsrxn:mail"
+        class="block size-[1.55rem] text-current"
+        aria-hidden="true"
+      />
+    </button>
+  </nav>
+</section>

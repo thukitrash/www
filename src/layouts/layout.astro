@@ -1,0 +1,69 @@
+---
+import Seo from "@/components/site/seo.astro";
+import ThemeToggle from "@/components/site/theme.astro";
+import { SITE, THEME } from "@/config";
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  canonical,
+  noindex = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={SITE.lang} data-locale="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Seo
+      title={title}
+      description={description}
+      canonical={canonical}
+      noindex={noindex}
+    />
+    <meta name="theme-color" content={THEME.colors.light} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favi/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favi/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favi/favicon-16x16.png"
+    />
+  </head>
+  <body>
+    <ThemeToggle />
+    <slot />
+    <script>
+      import { initEmail } from "@/scripts/fun";
+      import { initCat } from "@/scripts/cat";
+      import { initI18n } from "@/i18n";
+      import { initTheme } from "@/scripts/theme";
+
+      initI18n();
+      initTheme();
+      initCat();
+      initEmail();
+    </script>
+  </body>
+</html>

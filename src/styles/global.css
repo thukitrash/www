@@ -1,0 +1,245 @@
+@import "@fontsource/sniglet/latin-400.css";
+@import "@fontsource/comic-relief/latin-400.css";
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-paper: #fafafa;
+  --color-ink: #111111;
+  --color-muted: #777777;
+  --color-soft: #eeeeec;
+  --color-line: #191919;
+  --font-sans: "Comic Sans MS", "Comic Relief", Arial, sans-serif;
+  --font-display: "Sniglet", Arial, sans-serif;
+  --breakpoint-desktop: 780px;
+  --animate-equalizer: equalizer-bounce 0.85s ease-in-out infinite alternate;
+  --animate-cat-spin: cat-spin 0.5s ease;
+}
+
+html.dark {
+  --color-paper: #0e0e0d;
+  --color-ink: #f3f3f1;
+  --color-muted: #989896;
+  --color-soft: #1b1b19;
+  --color-line: #2a2a27;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light) {
+    --color-paper: #0e0e0d;
+    --color-ink: #f3f3f1;
+    --color-muted: #989896;
+    --color-soft: #1b1b19;
+    --color-line: #2a2a27;
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color-scheme: light;
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px 14px 32px;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.45;
+    text-align: center;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  @media (min-width: 780px) {
+    body {
+      padding: 48px 28px 44px;
+    }
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    touch-action: manipulation;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility player-range {
+  --player-progress: 0%;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 1.25rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+
+  &::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--color-ink) 0 var(--player-progress),
+      color-mix(in srgb, var(--color-ink) 14%, transparent)
+        var(--player-progress) 100%
+    );
+  }
+
+  &::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  }
+
+  &::-moz-range-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--color-ink);
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    margin-top: -4px;
+    border: 1.5px solid var(--color-ink);
+    border-radius: 50%;
+    background: var(--color-paper);
+    box-shadow: 0 0 0 2px var(--color-soft);
+    transition: transform 0.15s ease;
+  }
+
+  &::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid var(--color-ink);
+    border-radius: 50%;
+    background: var(--color-paper);
+  }
+
+  &:hover::-webkit-slider-thumb,
+  &:focus-visible::-webkit-slider-thumb {
+    transform: scale(1.15);
+  }
+
+  &:hover::-moz-range-thumb,
+  &:focus-visible::-moz-range-thumb {
+    transform: scale(1.15);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.45;
+  }
+}
+
+@utility dialog-pop {
+  &[open] {
+    animation: dialog-in 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  &[data-closing="true"] {
+    animation: dialog-out 0.15s ease-in forwards;
+  }
+  &::backdrop {
+    background: rgb(18 18 18 / 28%);
+  }
+  &[open]::backdrop {
+    animation: backdrop-in 0.2s ease;
+  }
+  &[data-closing="true"]::backdrop {
+    animation: backdrop-out 0.15s ease-in forwards;
+  }
+}
+
+@keyframes equalizer-bounce {
+  from {
+    transform: scaleY(0.3);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes cat-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dialog-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdrop-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

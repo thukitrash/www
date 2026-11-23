@@ -1,0 +1,43 @@
+---
+import Layout from "@/layouts/layout.astro";
+import Enter from "@/components/site/enter.astro";
+import Mast from "@/components/profile/mast.astro";
+import Intro from "@/components/profile/intro.astro";
+import Player from "@/components/player/player.astro";
+import Info from "@/components/profile/info.astro";
+import Links from "@/components/profile/links.astro";
+import Cat from "@/components/ui/cat.astro";
+import Footer from "@/components/site/footer.astro";
+import Dialog from "@/components/player/dialog.astro";
+import { t } from "@/i18n";
+---
+
+<Layout>
+  <Enter />
+  <main
+    class="mx-auto w-[min(100%,860px)] px-0 pt-1 pb-2 transition-[filter,opacity] duration-[450ms] ease-[ease] aria-hidden:select-none aria-hidden:opacity-55 aria-hidden:blur-[10px]"
+    data-main
+    aria-hidden="true"
+    inert
+  >
+    <section
+      class="flex flex-col items-center gap-[22px] desktop:grid desktop:grid-cols-[minmax(240px,292px)_minmax(0,1fr)] desktop:items-start desktop:gap-x-16 desktop:gap-y-0"
+      aria-label={t("profile.label")}
+      data-i18n-aria-label="profile.label"
+    >
+      <Mast />
+      <div class="flex w-full flex-col items-center gap-3 desktop:items-stretch desktop:gap-7 desktop:pt-2.5">
+        <Intro />
+        <div class="flex justify-center desktop:hidden">
+          <Links id="links-title-mobile" />
+        </div>
+        <Player />
+      </div>
+    </section>
+    <Info />
+    <Cat />
+    <Footer />
+  </main>
+  <Dialog />
+  <script src="../scripts/site.ts"></script>
+</Layout>
